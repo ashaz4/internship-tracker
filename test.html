@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Internship API Tester</title>
+</head>
+<body>
+  <h2>➕ Add Internship</h2>
+  <form id="addForm">
+    <label>Company: <input type="text" id="company" required /></label><br><br>
+    <label>Role: <input type="text" id="role" required /></label><br><br>
+    <label>Status: <input type="text" id="status" required /></label><br><br>
+    <label>Applied On: <input type="date" id="applied_on" required /></label><br><br>
+    <button type="submit">Add</button>
+  </form>
+
+  <hr>
+
+  <h2>🔄 Update Internship (by ID)</h2>
+  <form id="updateForm">
+    <label>ID: <input type="number" id="update_id" required /></label><br><br>
+    <label>Company: <input type="text" id="update_company" required /></label><br><br>
+    <label>Role: <input type="text" id="update_role" required /></label><br><br>
+    <label>Status: <input type="text" id="update_status" required /></label><br><br>
+    <label>Applied On: <input type="date" id="update_applied_on" required /></label><br><br>
+    <button type="submit">Update</button>
+  </form>
+
+  <hr>
+
+  <h2>❌ Delete Internship (by ID)</h2>
+  <form id="deleteForm">
+    <label>ID: <input type="number" id="delete_id" required /></label><br><br>
+    <button type="submit">Delete</button>
+  </form>
+
+  <hr>
+  <p id="response" style="color: green;"></p>
+
+  <script>
+    const showResponse = (msg) => {
+      document.getElementById('response').textContent = '✅ ' + msg;
+    };
+
+    // ADD
+    document.getElementById('addForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const data = {
+        company: company.value,
+        role: role.value,
+        status: status.value,
+        applied_on: applied_on.value
+      };
+      const res = await fetch('http://localhost:5000/api/internships', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const text = await res.text();
+      showResponse(text);
+    });
+
+    // UPDATE
+    document.getElementById('updateForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const id = update_id.value;
+      const data = {
+        company: update_company.value,
+        role: update_role.value,
+        status: update_status.value,
+        applied_on: update_applied_on.value
+      };
+      const res = await fetch(`http://localhost:5000/api/internships/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const text = await res.text();
+      showResponse(text);
+    });
+
+    // DELETE
+    document.getElementById('deleteForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const id = delete_id.value;
+      const res = await fetch(`http://localhost:5000/api/internships/${id}`, {
+        method: 'DELETE'
+      });
+      const text = await res.text();
+      showResponse(text);
+    });
+  </script>
+</body>
+</html>
