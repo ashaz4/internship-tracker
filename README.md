@@ -50,7 +50,7 @@ npm test
 ✅ Includes API, unit and integration tests.  
 Test coverage as of now:
 
-![Test Coverage Screenshot](./coverage/testingKeployAPI.png)
+![Test Coverage Screenshot](./testingKeployAPI.png)
 ---
 
 ## 📦 API Endpoints
